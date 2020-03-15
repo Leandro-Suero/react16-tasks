@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+// import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [username, setUsername] = useState("Leandro");
+    const [taskItems, setTaskItems] = useState([
+        { name: "Task one", done: false },
+        { name: "Task two", done: false },
+        { name: "Task three", done: true },
+        { name: "Task false", done: false }
+    ]);
+
+    const taskTableRows = () => {
+        return taskItems.map(task => (
+            <tr id={task.name}>
+                <td>{task.name}</td>
+            </tr>
+        ));
+    };
+
+    return (
+        <div className="App">
+            <h1>Hello World</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Done</th>
+                    </tr>
+                </thead>
+                <tbody>{taskTableRows()}</tbody>
+            </table>
+        </div>
+    );
 }
 
 export default App;
