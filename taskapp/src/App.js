@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TaskRow } from "./components/TaskRow";
 import { TaskBanner } from "./components/TaskBanner";
 import { TaskCreator } from "./components/TaskCreator";
 import { VisibilityControl } from "./components/VisibilityControl";
-// import './App.css';Creator/ import './App.cssCreator
 
 function App() {
     const [username, setUsername] = useState("Leandro");
@@ -14,6 +13,25 @@ function App() {
         { name: "Task false", done: false }
     ]);
     const [showCompleted, setShowCompleted] = useState(true);
+
+    useEffect(() => {
+        let data = localStorage.getItem("tasks");
+        if (data != null) {
+            setTaskItems(JSON.parse(data));
+        } else {
+            setUsername("LeandroExample");
+            setTaskItems([
+                { name: "Task one example", done: false },
+                { name: "Task two example", done: false },
+                { name: "Task three example", done: true },
+                { name: "Task false example", done: false }
+            ]);
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("tasks", JSON.stringify(taskItems));
+    }, [taskItems]);
 
     const createNewTask = taskName => {
         if (!taskItems.find(t => t.name === taskName)) {
