@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { TaskRow } from "./components/TaskRow";
+import { TaskBanner } from "./components/TaskBanner";
 // import './App.css';
 
 function App() {
@@ -10,18 +12,22 @@ function App() {
         { name: "Task false", done: false }
     ]);
 
-    const taskTableRows = () => {
-        return taskItems.map(task => (
-            <tr id={task.name}>
-                <td>{task.name}</td>
-            </tr>
+    const toggleTask = task =>
+        setTaskItems(
+            taskItems.map(t =>
+                t.name === task.name ? { ...t, done: !t.done } : t
+            )
+        );
+
+    const taskTableRows = () =>
+        taskItems.map(task => (
+            <TaskRow task={task} key={task.name} toggleTask={toggleTask} />
         ));
-    };
 
     return (
         <div className="App">
-            <h1>Hello World</h1>
-            <table>
+            <TaskBanner username={username} taskItems={taskItems} />
+            <table className="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>Description</th>
