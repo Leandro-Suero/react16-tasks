@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { TaskRow } from "./components/TaskRow";
 import { TaskBanner } from "./components/TaskBanner";
-// import './App.css';
+import { TaskCreator } from "./components/TaskCreator";
+// import './App.css';Creator/ import './App.cssCreator
 
 function App() {
     const [username, setUsername] = useState("Leandro");
@@ -11,6 +12,14 @@ function App() {
         { name: "Task three", done: true },
         { name: "Task false", done: false }
     ]);
+
+    const createNewTask = taskName => {
+        if (!taskItems.find(t => t.name === taskName)) {
+            setTaskItems([...taskItems, { name: taskName, done: false }]);
+        } else {
+            alert("That task already exist");
+        }
+    };
 
     const toggleTask = task =>
         setTaskItems(
@@ -27,6 +36,7 @@ function App() {
     return (
         <div className="App">
             <TaskBanner username={username} taskItems={taskItems} />
+            <TaskCreator callback={createNewTask} />
             <table className="table table-striped table-bordered">
                 <thead>
                     <tr>
